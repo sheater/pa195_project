@@ -20,41 +20,8 @@ services:
     image: bitnami/cassandra:3.11.10
     container_name: pa195-cassandra
     hostname: cassandra
-    # mem_limit: 2g
-    # healthcheck:
-    #   test: ["CMD", "cqlsh", "-u", "cassandra", "-p", "cassandra", "-e", "describe keyspaces" ]
-    #   interval: 5s
-    #   timeout: 5s
-    #   retries: 60
-    # networks:
-    #   - cassandra
     ports:
       - "9042:9042"  # Expose native binary CQL port for your apps
     volumes:
       - ./volumes/cassandra:/bitnami
       - ./scripts:/scripts
-    # environment: &environment
-    #   CASSANDRA_SEEDS: "cassandra"
-    #   CASSANDRA_CLUSTER_NAME: pa195_project
-    # # CASSANDRA_NUM_TOKENS: 256
-
-  # cassandra-2:
-  #   image: bitnami/cassandra:3.11.10
-  #   container_name: cassandra-2
-  #   hostname: cassandra-2
-  #   mem_limit: 2g
-  #   # healthcheck:
-  #   #   test: ["CMD", "cqlsh", "-e", "describe keyspaces" ]
-  #   #   interval: 5s
-  #   #   timeout: 5s
-  #   #   retries: 60
-  #   # networks:
-  #   #   - cassandra
-  #   ports:
-  #     - "9043:9042"  # Expose native binary CQL port for your apps
-  #   volumes:
-  #     - ./volumes/cassandra-2:/bitnami
-  #   environment: *environment    # point to "environment" to use the same environment variables as cass1
-  #   # depends_on:
-  #   #   cassandra-1:    # start cass2 only after cass1 is healthy
-  #   #     condition: service_healthy
