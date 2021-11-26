@@ -46,5 +46,5 @@ docker exec -it pa195-spark-master spark-submit \
     --packages com.datastax.spark:spark-cassandra-connector_2.12:3.1.0 \
     --driver-memory 2g \
     --executor-memory 2g \
-    /scripts/spark_test.py
+    /scripts/python/query1.py
 ```
