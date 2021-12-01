@@ -36,7 +36,7 @@ tar -xzvf ./downloads/dsbulk-1.8.0.tar.gz -s /^dsbulk-1.8.0/dsbulk/
 
 ## Usage
 
-Run test script `scripts/spark_test.py`
+Run test script `scripts/python/spark_test.py`
 
 ```
 docker exec -it pa195-spark-master spark-submit \
@@ -47,4 +47,18 @@ docker exec -it pa195-spark-master spark-submit \
     --driver-memory 2g \
     --executor-memory 2g \
     /scripts/python/query1.py
+```
+
+Run test script `scripts/java/spotify-charts/target/spotify-charts-1.jar`
+
+```
+docker exec -it pa195-spark-master spark-submit \
+    --class cz.muni.fi.pa195.SpotifyChartsRankOneArtists \
+    --conf spark.cassandra.connection.host=cassandra \
+    --conf spark.cassandra.auth.username=cassandra \
+    --conf spark.cassandra.auth.password=cassandra \
+    --packages com.datastax.spark:spark-cassandra-connector_2.12:3.1.0 \
+    --driver-memory 2g \
+    --executor-memory 2g \
+    /scripts/java/spotify-charts/target/spotify-charts-1.jar
 ```
