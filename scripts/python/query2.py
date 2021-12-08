@@ -1,12 +1,9 @@
-import sys
 from pyspark import SparkConf, SparkContext
 from pyspark.sql import SQLContext
 from pyspark.sql import functions as F
 
-sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
-
 conf = SparkConf() \
-    .setAppName("PySpark Cassandra Test") \
+    .setAppName("PySpark Cassandra Query 2") \
     .setMaster("spark://127.0.0.1:7077")
 
 sc = SparkContext('local', conf=conf)

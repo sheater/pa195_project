@@ -1,3 +1,5 @@
+# PA195 project - Spark + Cassandra demo
+
 ## Installation
 
 1. Download the data, unarchive and place it to `./data` folder such that `data/charts.csv` file exists
@@ -34,10 +36,42 @@ tar -xzvf ./downloads/dsbulk-1.8.0.tar.gz -s /^dsbulk-1.8.0/dsbulk/
     -t charts
 ```
 
-## Usage
+## Queries
 
-Run test script `scripts/python/spark_test.py`
+### Query 0
+Just the performance testing query.
+Normally, it does not make very sense to use Spark when pure Cassandra can be used.
 
+> Number of records in Spotify’s top 200 for Slovakia region
+
+Cassandra's CQL for the query:
+
+```
+SELECT COUNT(*) FROM charts WHERE region='Slovakia' AND chart='top200' ALLOW FILTERING;
+```
+
+### Query 1
+
+> The number of days each artist was on the 1th place in the Spotify's top 200 chart
+
+### Query 2
+> The number of days the BTS band was on its highest rank in each region in Spotify's top 200 chart
+
+## Python
+
+### Query 0
+```
+docker exec -it pa195-spark-master spark-submit \
+    --conf spark.cassandra.connection.host=cassandra \
+    --conf spark.cassandra.auth.username=cassandra \
+    --conf spark.cassandra.auth.password=cassandra \
+    --packages com.datastax.spark:spark-cassandra-connector_2.12:3.1.0 \
+    --driver-memory 2g \
+    --executor-memory 2g \
+    /scripts/python/query0.py
+```
+
+### Query 1
 ```
 docker exec -it pa195-spark-master spark-submit \
     --conf spark.cassandra.connection.host=cassandra \
@@ -49,7 +83,28 @@ docker exec -it pa195-spark-master spark-submit \
     /scripts/python/query1.py
 ```
 
-Run test script `scripts/java/spotify-charts/target/spotify-charts-1.jar`
+### Query 2
+
+```
+docker exec -it pa195-spark-master spark-submit \
+    --conf spark.cassandra.connection.host=cassandra \
+    --conf spark.cassandra.auth.username=cassandra \
+    --conf spark.cassandra.auth.password=cassandra \
+    --packages com.datastax.spark:spark-cassandra-connector_2.12:3.1.0 \
+    --driver-memory 2g \
+    --executor-memory 2g \
+    /scripts/python/query2.py
+```
+
+## Java
+
+Before use, the worker has to be started:
+
+```
+docker exec -it pa195-spark-master start-worker.sh spark://pa195-spark-master:7077
+```
+
+#### Query 1
 
 ```
 docker exec -it pa195-spark-master spark-submit \
