@@ -22,7 +22,7 @@ public class SpotifyChartsRankOneArtists {
         df.where(col("chart").equalTo("top200").and(col("rank").equalTo(1)))
                 .groupBy(col("artist"))
                 .count()
-                .orderBy(col("count").asc())
+                .orderBy(col("count").desc())
                 .show();
     }
 }

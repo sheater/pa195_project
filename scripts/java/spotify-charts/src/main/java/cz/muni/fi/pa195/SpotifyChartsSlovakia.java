@@ -19,6 +19,9 @@ public class SpotifyChartsSlovakia {
                 .option("table", "charts")
                 .load();
 
-        df.filter(col("region").equalTo("Slovakia").and(col("chart").equalTo("top200"))).show();
+        Long count = df.filter(col("region").equalTo("Slovakia")
+                .and(col("chart").equalTo("top200")))
+                .count();
+        System.out.printf("Total: %s%n", count);
     }
 }
