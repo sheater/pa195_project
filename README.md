@@ -104,6 +104,20 @@ Before use, the worker has to be started:
 docker exec -it pa195-spark-master start-worker.sh spark://pa195-spark-master:7077
 ```
 
+#### Query 0
+
+```
+docker exec -it pa195-spark-master spark-submit \
+    --class cz.muni.fi.pa195.SpotifyChartsSlovakia \
+    --conf spark.cassandra.connection.host=cassandra \
+    --conf spark.cassandra.auth.username=cassandra \
+    --conf spark.cassandra.auth.password=cassandra \
+    --packages com.datastax.spark:spark-cassandra-connector_2.12:3.1.0 \
+    --driver-memory 2g \
+    --executor-memory 2g \
+    /scripts/java/spotify-charts/target/spotify-charts-1.jar
+```
+
 #### Query 1
 
 ```
